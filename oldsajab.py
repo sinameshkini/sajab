@@ -16,39 +16,36 @@ GPIO.setup(35,GPIO.OUT) #Relay 3
 GPIO.setup(37,GPIO.OUT) #Relay 4
 GPIO.setup(12,GPIO.OUT) #Sensor1 Enable
 
-pass_main='1120'
-time_xloc= 10
-time_yloc= 10
-
-date_xloc=10
-date_yloc=30
-
-table_x=20
-table_y=120
-
-step = 25
-stepx = 38
-
-#Desigen Param
-color = 'lightblue'
-top_fg_color = 'lightblue'
-top_bg_color = '#111131'
-#End Desigen Param
-
 root=Tk()
 root.geometry("%dx%d+%d+%d"%(800,480,100,50)) #x,y,horizental,vertical
 root.title('SAJAB')
 root.configure(background='lightblue')
 
-Label(root,text="Sampling rate:",fg=top_bg_color,bg=color,font=(14)).place(x=table_x,y=table_y+4*stepx)
-global sr_label
-sr_label = Label(root,fg=top_bg_color,bg=color,font=(14))
-sr_label.place(x=table_x+130,y=table_y+4*stepx)
-# sr_label.config(text=sampling_rate)
-#sr_read(sr_label)
-Label(root,text="Sec.",fg=top_bg_color,bg=color,font=(14)).place(x=table_x+160,y=table_y+4*stepx)
 
 
+# with open("conf.json", "r") as conf_file: #opened conf json file
+# # conf_file = str(open("conf.json",'r'))
+#   global conf_json
+#   conf_json = json.load(conf_file)
+# conf_file.close()
+
+
+# v1 = IntVar()
+# v1.set(int(conf_json["relay1"]))  # initializing the choice, i.e. Python
+
+# v2 = IntVar()
+# v2.set(int(conf_json["relay2"]))  # initializing the choice, i.e. Python
+
+# v3 = IntVar()
+# v3.set(int(conf_json["relay3"]))  # initializing the choice, i.e. Python
+
+# v4 = IntVar()
+# v4.set(int(conf_json["relay4"]))  # initializing the choice, i.e. Python
+
+# GPIO.output(31,v1.get())
+# GPIO.output(33,v2.get())
+# GPIO.output(35,v3.get())
+# GPIO.output(37,v4.get())
 
 v1 = IntVar()
 v2 = IntVar()
@@ -97,6 +94,21 @@ config_req()
 global config_rate
 config_rate = 8
 
+#Variables
+
+pass_main='1120'
+time_xloc= 10
+time_yloc= 10
+
+date_xloc=10
+date_yloc=30
+
+table_x=20
+table_y=120
+
+step = 25
+stepx = 38
+
 def save_conf():
     with open("conf.json", "w+") as conf_file:
         json.dump(conf_json, conf_file)
@@ -138,67 +150,57 @@ def relay1():
     config_req()
     GPIO.setup(31,GPIO.OUT) #Relay 1
     if v1.get()==0:
-        GPIO.output(31,1)
-        conf_json["relay1"] = "1"
-    else:
         GPIO.output(31,0)
         conf_json["relay1"] = "0"
-        # print("\nHERE\n")
+    else:
+        GPIO.output(31,1)
+        conf_json["relay1"] = "1"
     conf_str = "http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1&status=0&relay1=%s" %(conf_json['relay1'])
     try:
         urlretrieve(conf_str)
-        print(conf_str)
     except:
-        print("Network connection error..., please check it")
         pass
-    
 def relay2():
     config_req()
     GPIO.setup(33,GPIO.OUT) #Relay 1
     if v2.get()==0:
-        GPIO.output(33,1)
-        conf_json["relay2"] = "1"
-    else:
         GPIO.output(33,0)
         conf_json["relay2"] = "0"
+    else:
+        GPIO.output(33,1)
+        conf_json["relay2"] = "1"
     conf_str = "http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1&status=0&relay2=%s" %(conf_json['relay2'])
     try:
         urlretrieve(conf_str)
-        print(conf_str)
     except:
-        print("Network connection error..., please check it")
         pass
 def relay3():
     config_req()
     GPIO.setup(35,GPIO.OUT) #Relay 1
     if v3.get()==0:
-        GPIO.output(35,1)
-        conf_json["relay3"] = "1"
-    else:
         GPIO.output(35,0)
         conf_json["relay3"] = "0"
+    else:
+        GPIO.output(35,1)
+        conf_json["relay3"] = "1"
     conf_str = "http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1&status=0&relay3=%s" %(conf_json['relay3'])
     try:
         urlretrieve(conf_str)
-        print(conf_str)
     except:
-        print("Network connection error..., please check it")
         pass
 def relay4():
     config_req()
     GPIO.setup(37,GPIO.OUT) #Relay 1
     if v4.get()==0:
-        GPIO.output(37,1)
-        conf_json["relay4"] = "1"
-    else:
         GPIO.output(37,0)
         conf_json["relay4"] = "0"
+    else:
+        GPIO.output(37,1)
+        conf_json["relay4"] = "1"
     conf_str = "http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1&status=0&relay4=%s" %(conf_json['relay4'])
     try:
         urlretrieve(conf_str)
-        print(conf_str)
     except:
-        print("Network connection error..., please check it")
         pass
 
 def make_md5(s, encoding='utf-8'):
@@ -207,7 +209,7 @@ def make_md5(s, encoding='utf-8'):
 def sen1_read():
     t = time.time()
     while(1):
-        if((time.time()-t)>float(sampling_rate*2)):
+        if((time.time()-t)>(sampling_rate*2)):
             return 0
             break
         GPIO.output(12,0)
@@ -307,7 +309,13 @@ def about():
    message.pack(fill="both", expand="yes")
 #End Functions
 
+#Desigen Param
 
+
+color = 'lightblue'
+top_fg_color = 'lightblue'
+top_bg_color = '#111131'
+#End Desigen Param
 
 #Header
 w = Canvas(root,width= 800,height= 100)
@@ -524,7 +532,6 @@ def ok():
     try:
         urlretrieve(conf_str)
     except:
-        print("Network connection error..., please check it")
         pass
     # save_conf()
     setting_frame.destroy()
@@ -617,7 +624,6 @@ def send_data():
     try:
         urlretrieve(data_link)
     except:
-        print("Network connection error..., please check it")
         pass
     #if(urlretrieve(data_link)):
     print (data_link)
@@ -626,6 +632,13 @@ def send_data():
 Button(root,text="Send Data",command=send_data,font=(14)).place(x=200,y=360)
 
 
+Label(root,text="Sampling rate:",fg=top_bg_color,bg=color,font=(14)).place(x=table_x,y=table_y+4*stepx)
+global sr_label
+sr_label = Label(root,fg=top_bg_color,bg=color,font=(14))
+sr_label.place(x=table_x+130,y=table_y+4*stepx)
+sr_label.config(text=sampling_rate)
+#sr_read(sr_label)
+Label(root,text="Sec.",fg=top_bg_color,bg=color,font=(14)).place(x=table_x+160,y=table_y+4*stepx)
 
 
 Button(root,text="Config request",command=config_req,font=(14)).place(x=400,y=360)
@@ -643,7 +656,7 @@ class print_sen(Thread):
             config_req()
             # refresh_conf()
             # print (conf_json)
-            time.sleep(int(sampling_rate)-0.8)
+            time.sleep(sampling_rate-0.8)
             
 
 t_print_sen = print_sen()
