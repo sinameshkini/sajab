@@ -47,7 +47,8 @@ sr_label.place(x=table_x+130,y=table_y+4*stepx)
 # sr_label.config(text=sampling_rate)
 #sr_read(sr_label)
 Label(root,text="Sec.",fg=top_bg_color,bg=color,font=(14)).place(x=table_x+160,y=table_y+4*stepx)
-
+logo = PhotoImage(file="/home/pi/sajab/logo.gif")
+Label(root,image=logo,bg=color).place(x=500,y=100)
 
 
 v1 = IntVar()
@@ -298,10 +299,14 @@ def second_label(label):
 def about():
    filewin = Toplevel(root)
    tx ="""
+    Supervisor: Dr.Majid Ziaratban
+    M.Ziaratban@gu.ac.ir
+    
     Development by: Sina Meshkini
     +98 911 380 6028
     SinaMeshkini7@gmail.com
     @SinaMeshkini
+    www.SottaByte.ir
     """
    message = Message(filewin, text=tx, relief = RIDGE , width = 400)
    message.pack(fill="both", expand="yes")
@@ -426,7 +431,7 @@ def pass_check():
     Button(passcheck,text="OK",command=pass_check2,font=(14)).place(x=80,y=80)
     
 def read_pass():
-    pass_file = open("passwd.txt","r")
+    pass_file = open("/home/pi/sajab/passwd.txt","r")
     pass_main = str(pass_file.read())
     return pass_main
     
@@ -623,6 +628,10 @@ def send_data():
     print (data_link)
     #else:
      #   print("Connection  faild, pleas check network")
+
+Button(root,text="About us",command=about,font=(14)).place(x=50,y=360)
+
+
 Button(root,text="Send Data",command=send_data,font=(14)).place(x=200,y=360)
 
 
@@ -631,22 +640,31 @@ Button(root,text="Send Data",command=send_data,font=(14)).place(x=200,y=360)
 Button(root,text="Config request",command=config_req,font=(14)).place(x=400,y=360)
 Button(root,text="Setting",command=pass_check,font=(14)).place(x=630,y=360)
 
+#sen1_data = sen1_read()
+#sen1.config(text=sen1_data)
+            
+counter_samp = 0
 class print_sen(Thread):
     def run(self):
         while(1):
             #print(sen1_read())
             global sen1
             global sen1_data
+            global counter_samp
             sen1_data = sen1_read()
             sen1.config(text=sen1_data)
-            send_data()
-            config_req()
+            counter_samp += 1
+            if(counter_samp>=int(sampling_rate)):
+                send_data()
+                config_req()
+                counter_samp = 0
             # refresh_conf()
             # print (conf_json)
-            time.sleep(int(sampling_rate)-0.8)
+            time.sleep(1)
             
 
 t_print_sen = print_sen()
 t_print_sen.start()
+
 
 root.mainloop()
