@@ -1,0 +1,11 @@
+2020/07/10 17:01:33.356701 SAJAB Service Started (Dev: http://sottabyte.ir)
+2020/07/10 17:01:33.356774 request: http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1
+2020/07/10 17:07:37.601190 SAJAB Service Started (Dev: http://sottabyte.ir)
+2020/07/10 17:07:37.601254 request: http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1
+2020/07/10 17:08:11.791032 SAJAB Service Started (Dev: http://sottabyte.ir)
+2020/07/10 17:08:11.791095 request: http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1
+2020/07/10 17:47:55.148611 SAJAB Service Started (Dev: http://sottabyte.ir)
+2020/07/10 17:47:55.148678 request: http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1
+2020/07/10 17:50:29.403677 SAJAB Service Started (Dev: http://sottabyte.ir)
+2020/07/10 17:50:29.403751 request: http://www.mehavira.ir/sajab/server.php?action=station&imei=9359374362&station_index=1
+2020/07/10 17:50:31.307200 response: {ok 0 777 0 GolestanUni  0 0 0     1 60 10 10 200 10   }
